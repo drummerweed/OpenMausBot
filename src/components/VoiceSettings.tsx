@@ -78,6 +78,15 @@ export function VoiceSettings({
         placeholder: t("voice.fish.keyPlaceholder"),
         keyUrl: "https://fish.audio/app/api-keys/",
       }
+    : provider === "gemini"
+      ? {
+          id: "gemini" as const,
+          name: "Google Gemini",
+          credential: "geminiKey" as const,
+          configField: "geminiKey" as const,
+          placeholder: "Paste Gemini API key (AQ... or AIza...)",
+          keyUrl: "https://aistudio.google.com/app/apikey",
+        }
     : provider === "elevenlabs"
       ? {
           id: "elevenlabs" as const,
@@ -89,7 +98,9 @@ export function VoiceSettings({
         }
       : null;
   const key = cloudProvider ? voiceKeyDraftValue(keyDraft, cloudProvider.id) : "";
-  const hostProviderLabel = provider === "fish"
+  const hostProviderLabel = provider === "gemini"
+    ? "Google Gemini Live Voice"
+    : provider === "fish"
     ? t("voice.hostLabel", { provider: t("voice.fish.label") })
     : provider === "elevenlabs"
       ? t("voice.hostLabel", { provider: t("voice.elevenlabs.label") })
@@ -198,7 +209,7 @@ export function VoiceSettings({
       .finally(() => current() && setAddingVoice(null));
   };
 
-  const setProvider = (next: "elevenlabs" | "fish" | "system" | "chatterbox" | "xai") => {
+  const setProvider = (next: "elevenlabs" | "fish" | "system" | "chatterbox" | "xai" | "gemini") => {
     if (next === provider || switching || (next === "system" && !systemVoicesAvailable)) return;
     setSwitching(true);
     setKeyDraft({ provider: null, value: "" });
@@ -314,11 +325,12 @@ export function VoiceSettings({
           {/* Six columns: the three online services share the top row, the two on this computer the bottom one. */}
           <div className="grid grid-cols-6 gap-1 rounded-xl bg-inset p-1" role="radiogroup" aria-label={t("voice.engine")}>
             {([
+              { value: "gemini", label: "Gemini", available: true, span: "col-span-2" },
               { value: "elevenlabs", label: t("voice.elevenlabs.label"), available: true, span: "col-span-2" },
               { value: "fish", label: t("voice.fish.label"), available: true, span: "col-span-2" },
               { value: "xai", label: t("voice.grok.label"), available: true, span: "col-span-2" },
-              { value: "system", label: t("voice.macBuiltIn"), available: systemVoicesAvailable, span: "col-span-3" },
-              { value: "chatterbox", label: t("voice.chatterboxLocal"), available: true, span: "col-span-3" },
+              { value: "system", label: t("voice.macBuiltIn"), available: systemVoicesAvailable, span: "col-span-2" },
+              { value: "chatterbox", label: t("voice.chatterboxLocal"), available: true, span: "col-span-2" },
             ] as const).map((option) => (
               <button
                 key={option.value}

@@ -56,7 +56,7 @@ export type CredentialConfig = {
   xai?: { key?: string };
   box?: { token?: string };
   opencodeGo?: { apiKey?: string };
-  tts?: { key?: string; fishKey?: string };
+  tts?: { key?: string; fishKey?: string; geminiKey?: string };
   imageGen?: { key?: string };
   /** Not in the settings file: the server fills it from its login store. */
   onePassword?: { connected?: boolean };

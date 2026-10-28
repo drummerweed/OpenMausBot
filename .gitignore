@@ -40,3 +40,8 @@ deploy/podman/.env
 deploy/podman/.env.*
 !deploy/podman/.env.example
 /.env
+
+.env*
+*.env
+*secret*
+

@@ -15,7 +15,7 @@ export function allow<const T extends string>(value: unknown, list: readonly T[]
 export const KEY_PROVIDER = [
   "anthropic", "openai", "openrouter", "openai_compat", "xai", "mistral", "cerebras", "groq", "meta", "boat", "composio",
   "opencode_go", "custom_endpoint", "elevenlabs", "fish_audio", "jev", "openrouter_decider", "openai_image", "custom_image",
-  "openai_live", "onepassword", "treg", "deepseek",
+  "openai_live", "onepassword", "treg", "deepseek", "gemini",
 ] as const;
 export type KeyProvider = (typeof KEY_PROVIDER)[number];
 
@@ -76,7 +76,7 @@ export type ConnectorResult = (typeof CONNECTOR_RESULT)[number];
 export const CALL_MODE = ["turns", "live"] as const;
 export const ROOM_MODE = ["chat", "goal"] as const;
 export const CLOUD_COMPUTER_SOURCE = ["own_key", "included", "none"] as const;
-export const VOICE = ["elevenlabs", "fish", "system", "chatterbox", "xai", "none"] as const;
+export const VOICE = ["elevenlabs", "fish", "system", "chatterbox", "xai", "gemini", "none"] as const;
 export const DECIDER = ["jev", "openrouter", "off"] as const;
 export const CONNECTORS_MODE = ["managed", "self_hosted", "unavailable"] as const;
 export const LOCAL_VM_MODE = ["shared", "per_bot", "pool"] as const;
