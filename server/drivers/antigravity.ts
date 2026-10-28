@@ -132,6 +132,15 @@ const support: AcpSupport = {
       ? result.configOptions.find((option: any) => option?.id === "mode")?.currentValue
       : undefined;
     if (mode !== wanted) throw new Error(`Antigravity did not apply ${wanted} permission mode.`);
+
+    const match = /-(high|medium|low)$/.exec(turn.model ?? "");
+    if (match) {
+      await request("session/set_config_option", {
+        sessionId,
+        configId: "thinking_level",
+        value: match[1],
+      }).catch(() => null);
+    }
   },
 };
 

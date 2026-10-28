@@ -89,7 +89,10 @@ export class SessionModelControls {
     }
     selected = this.modelOf(this.input.state());
     if (selected !== wanted) {
-      throw new Error(`${this.input.displayName} did not switch to ${wanted} (still ${selected ?? "unknown"})`);
+      const isSuffixVariant = selected && wanted.startsWith(`${selected}-`);
+      if (!isSuffixVariant) {
+        throw new Error(`${this.input.displayName} did not switch to ${wanted} (still ${selected ?? "unknown"})`);
+      }
     }
     return selected;
   }
